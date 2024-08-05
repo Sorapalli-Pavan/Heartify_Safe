@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>User Information Form</title>
+  <style>
+    /* Optional styling for the form */
+   /* Global styles */
+body {
+    font-family: Arial, sans-serif;
+    margin: 20px;
+  }
+  
+  h1 {
+    text-align: center;
+  }
+  
+  /* Form container */
+  #patient-form {
+    max-width: 600px;
+    margin: 0 auto;
+  }
+  
+  /* Form input fields */
+  label {
+    display: block;
+    margin-bottom: 5px;
+  }
+  
+  input[type="text"],
+  input[type="number"],
+  select {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    margin-bottom: 15px;
+  }
+  
+  /* Button */
+  button[type="submit"] {
+    background-color: #4CAF50;
+    border: none;
+    color: white;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: block;
+    width: 100%;
+    font-size: 16px;
+    margin-bottom: 10px;
+    cursor: pointer;
+    border-radius: 4px;
+  }
+  
+  button[type="submit"]:hover {
+    background-color: #45a049;
+  }
+  
+  </style>
+</head>
+<body>
+  <h1>User Information Form</h1>
+  <form id="patient-form">
+    <label for="gender">Gender:</label>
+    <select id="gender" name="gender" required>
+      <option value="">Select Gender</option>
+      <option value="0">Male</option>
+      <option value="1">Female</option>
+    </select>
+
+    <label for="age">Age:</label>
+    <input type="number" id="age" name="age" required>
+
+    <label for="education">Education (Years):</label>
+    <input type="number" id="education" name="education" step="0.1" required>  <label for="currentSmoker">Current Smoker (Yes: 1, No: 0):</label>
+    <select id="currentSmoker" name="currentSmoker" required>
+      <option value="">Select</option>
+      <option value="0">No</option>
+      <option value="1">Yes</option>
+    </select>
+
+    <label for="cigsPerDay">Cigarettes per Day (if smoker):</label>
+    <input type="number" id="cigsPerDay" name="cigsPerDay" step="0.1">  <label for="BPMeds">Taking Blood Pressure Medication (Yes: any value, No: 0):</label>
+    <input type="number" id="BPMeds" name="BPMeds">
+
+    <label for="prevalentStroke">History of Stroke (Yes: 1, No: 0):</label>
+    <select id="prevalentStroke" name="prevalentStroke" required>
+      <option value="">Select</option>
+      <option value="0">No</option>
+      <option value="1">Yes</option>
+    </select>
+
+    <label for="prevalentHyp">History of Hypertension (Yes: 1, No: 0):</label>
+    <select id="prevalentHyp" name="prevalentHyp" required>
+      <option value="">Select</option>
+      <option value="0">No</option>
+      <option value="1">Yes</option>
+    </select>
+
+    <label for="Diabetes">Diabetes (Yes: 1, No: 0):</label>
+    <select id="Diabetes" name="Diabetes" required>
+      <option value="">Select</option>
+      <option value="0">No</option>
+      <option value="1">Yes</option>
+    </select>
+
+    <label for="totChol">Total Cholesterol (mg/dL):</label>
+    <input type="number" id="totChol" name="totChol" required>
+
+    <label for="sysBP">Systolic Blood Pressure (mmHg):</label>
+    <input type="number" id="sysBP" name="sysBP" required>
+
+    <label for="diaBP">Diastolic Blood Pressure (mmHg):</label>
+    <input type="number" id="diaBP" name="diaBP" required>
+    
+    <label for="BMI">Body Mass Index (BMI):</label>
+    <input type="number" id="BMI" name="BMI" step="0.1" required>
+    
+    <label for="HeartRate">Heart Rate (bpm):</label>
+    <input type="number" id="HeartRate" name="HeartRate" required>
+    
+    <label for="glucose">Blood Glucose (mg/dL):</label>
+    <input type="number" id="glucose" name="glucose" required>
+    
+    <label for="TenYearCHD">Ten-Year Risk of Coronary Heart Disease (Yes: 1, No: 0):</label>
+    <select id="TenYearCHD" name="TenYearCHD" required>
+      <option value="">Select</option>
+      <option value="0">No</option>
+      <option value="1">Yes</option>
+    </select>
+    
+    <button type="submit" id="submitBtn">Submit</button>
+  </form>
+
+  <script>
+    document.getElementById('submitBtn').addEventListener('click', function(event) {
+      event.preventDefault();
+      exportToCSV();
+    });
+
+    function exportToCSV() {
+      const form = document.getElementById('patient-form');
+      const formData = new FormData(form);
+      const data = [];
+      formData.forEach(function(value, key) {
+        data.push(key + ',' + value);
+      });
+      const csvContent = 'data:text/csv;charset=utf-8,' + data.join('\n');
+      const encodedUri = encodeURI(csvContent);
+      const link = document.createElement('a');
+      link.setAttribute('href', encodedUri);
+      link.setAttribute('download', 'user_information.csv');
+      document.body.appendChild(link);
+      link.click();
+    }
+  </script>
+</body>
+</html>
